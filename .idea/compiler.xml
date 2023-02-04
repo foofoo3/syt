@@ -10,6 +10,7 @@
         <module name="untitled" />
         <module name="service_util" />
         <module name="model" />
+        <module name="service_user" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -18,6 +19,7 @@
       <module name="common_utils" target="8" />
       <module name="model" target="8" />
       <module name="service" target="8" />
+      <module name="service_user" target="8" />
       <module name="service_util" target="8" />
       <module name="syt" target="1.8" />
       <module name="untitled" target="8" />
@@ -30,6 +32,7 @@
       <module name="common_utils" options="-parameters" />
       <module name="model" options="-parameters" />
       <module name="service" options="-parameters" />
+      <module name="service_user" options="-parameters" />
       <module name="service_util" options="-parameters" />
       <module name="syt" options="-parameters" />
       <module name="untitled" options="-parameters" />
