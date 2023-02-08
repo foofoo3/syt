@@ -12,6 +12,7 @@
     <artifactId>service</artifactId>
     <modules>
         <module>service_user</module>
+        <module>service_hosp</module>
     </modules>
 
     <properties>
