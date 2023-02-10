@@ -1,6 +1,6 @@
 package syt.hospital.model.user;
 
-import jw.hospital.model.base.BaseEntity;
+import syt.hospital.model.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;

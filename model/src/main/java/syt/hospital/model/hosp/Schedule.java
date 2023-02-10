@@ -1,6 +1,6 @@
 package syt.hospital.model.hosp;
 
-import jw.hospital.model.base.BaseMongoEntity;
+import syt.hospital.model.base.BaseMongoEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

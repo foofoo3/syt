@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import jw.hospital.model.base.BaseEntity;
+import syt.hospital.model.base.BaseEntity;
 import lombok.Data;
 
 import java.util.List;

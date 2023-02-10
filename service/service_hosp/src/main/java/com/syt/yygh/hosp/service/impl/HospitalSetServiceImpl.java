@@ -12,4 +12,5 @@ import syt.hospital.model.hosp.HospitalSet;
 
 @Service
 public class HospitalSetServiceImpl extends ServiceImpl<HospitalSetMapper, HospitalSet> implements HospitalSetService {
+
 }

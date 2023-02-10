@@ -1,6 +1,6 @@
 package syt.hospital.vo.order;
 
-import jw.hospital.vo.msm.MsmVo;
+import syt.hospital.vo.msm.MsmVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
