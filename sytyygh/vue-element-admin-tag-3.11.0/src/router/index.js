@@ -91,6 +91,31 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/hospSet',
+    component: Layout,
+    redirect: '/hospSet/list',
+    name: '医院设置管理',
+    meta: {
+      title: '医院设置管理',
+      icon: 'example'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/hospSet/list'),
+        name: '医院设置列表',
+        meta: { title: '医院设置列表', icon: 'edit' }
+      },
+      {
+        path: 'add',
+        component: () => import('@/views/hospSet/add'),
+        name: '医院设置添加',
+        meta: { title: '医院设置添加', icon: 'edit'  },
+      },
+  
+    ]
+  },
+  {
     path: '/guide',
     component: Layout,
     redirect: '/guide/index',
