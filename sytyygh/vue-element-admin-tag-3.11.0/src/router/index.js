@@ -122,6 +122,25 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/cmn',
+    component: Layout,
+    redirect: '/cmn/list',
+    name: '数据管理',
+    alwaysShow: true,
+    meta: {
+      title: '数据管理',
+      icon: 'example'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/dict/list'),
+        name: '数据字典',
+        meta: { title: '数据字典', icon: 'edit' }
+      },
+    ]
+  },
+  {
     path: '/guide',
     component: Layout,
     redirect: '/guide/index',
