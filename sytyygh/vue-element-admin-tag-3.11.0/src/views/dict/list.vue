@@ -94,6 +94,10 @@ export default {
         },
         importData() {
             this.dialogImportVisible = true
+        },
+        onUploadSuccess() {
+            this.dialogImportVisible = false
+            this.getDictList(1)
         }
     }
 }

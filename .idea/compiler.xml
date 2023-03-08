@@ -14,12 +14,14 @@
         <module name="model" />
         <module name="service_hosp" />
         <module name="service_cmn" />
+        <module name="hospital-manage" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="common" target="8" />
       <module name="common_util" target="8" />
       <module name="common_utils" target="8" />
+      <module name="hospital-manage" target="1.8" />
       <module name="model" target="8" />
       <module name="service" target="8" />
       <module name="service_cmn" target="8" />
@@ -35,6 +37,7 @@
       <module name="common" options="-parameters" />
       <module name="common_util" options="-parameters" />
       <module name="common_utils" options="-parameters" />
+      <module name="hospital-manage" options="-parameters" />
       <module name="model" options="-parameters" />
       <module name="service" options="-parameters" />
       <module name="service_cmn" options="-parameters" />

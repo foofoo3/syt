@@ -6,16 +6,20 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.syt.yygh.cmn.listener.DictListener;
 import com.syt.yygh.cmn.mapper.DictMapper;
 import com.syt.yygh.cmn.service.DictService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import syt.hospital.model.cmn.Dict;
 import syt.hospital.vo.cmn.DictEeVo;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,6 +29,7 @@ import java.util.List;
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
 
     @Override
+    @Cacheable(value = "dict",keyGenerator = "keyGenerator")
     public List<Dict> findChildData(Long id) {
         QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("parent_id",id);
@@ -62,6 +67,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     }
 
     @Override
+    @CacheEvict(value = "dict",allEntries = true)
     public void importDict(MultipartFile file) {
         try {
             EasyExcel.read(file.getInputStream(),DictEeVo.class, new DictListener(baseMapper))
