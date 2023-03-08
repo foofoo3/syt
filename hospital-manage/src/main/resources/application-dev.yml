@@ -6,8 +6,8 @@ mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
 spring:
   thymeleaf:
-#   mode: LEGACYHTML5
-    mode: HTML
+    mode: LEGACYHTML5
+#    mode: HTML
     #编码 可不用配置
     encoding: UTF-8
     #开发配置为false,避免修改模板还要重启服务器
@@ -43,3 +43,4 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+

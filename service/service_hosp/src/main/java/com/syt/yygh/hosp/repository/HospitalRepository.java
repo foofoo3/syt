@@ -9,4 +9,5 @@ import syt.hospital.model.hosp.Hospital;
  */
 @Repository
 public interface HospitalRepository extends MongoRepository<Hospital,String> {
+    Hospital getHospitalByHoscode(String hoscode);
 }
