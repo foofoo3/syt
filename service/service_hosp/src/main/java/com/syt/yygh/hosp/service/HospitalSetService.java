@@ -8,4 +8,5 @@ import syt.hospital.model.hosp.HospitalSet;
  * @Author: foofoo3
  */
 public interface HospitalSetService extends IService<HospitalSet> {
+    String getSignKey(String hoscode);
 }

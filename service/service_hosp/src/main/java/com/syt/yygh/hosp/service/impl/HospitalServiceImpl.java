@@ -28,15 +28,18 @@ public class HospitalServiceImpl implements HospitalService {
         if (hospitalGet != null) {
             hospital.setStatus(hospitalGet.getStatus());
             hospital.setCreateTime(hospitalGet.getCreateTime());
-            hospital.setUpdateTime(new Date());
-            hospital.setIsDeleted(0);
-            hospitalRepository.save(hospital);
         }else {
             hospital.setStatus(0);
             hospital.setCreateTime(new Date());
-            hospital.setUpdateTime(new Date());
-            hospital.setIsDeleted(0);
-            hospitalRepository.save(hospital);
         }
+        hospital.setUpdateTime(new Date());
+        hospital.setIsDeleted(0);
+        hospitalRepository.save(hospital);
+    }
+
+    @Override
+    public Hospital getByHoscode(String hoscode) {
+        Hospital hospitalByHoscode = hospitalRepository.getHospitalByHoscode(hoscode);
+        return hospitalByHoscode;
     }
 }
