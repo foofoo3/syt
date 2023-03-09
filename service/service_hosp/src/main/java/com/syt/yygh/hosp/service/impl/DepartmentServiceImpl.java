@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import syt.hospital.model.hosp.Department;
-import syt.hospital.model.hosp.Hospital;
 import syt.hospital.vo.hosp.DepartmentQueryVo;
 
 import java.util.Date;
