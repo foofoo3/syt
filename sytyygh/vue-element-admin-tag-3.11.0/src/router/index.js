@@ -119,6 +119,12 @@ export const constantRoutes = [
         meta: { title: '医院设置修改', icon: 'edit' },
         hidden: true
       },
+      {
+        path: 'hosp/list',
+        name: '医院列表',
+        component: () => import('@/views/hosp/list'),
+        meta: { title: '医院列表', icon: 'table' }
+      },
     ]
   },
   {

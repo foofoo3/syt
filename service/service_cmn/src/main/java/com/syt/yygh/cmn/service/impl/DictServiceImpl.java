@@ -6,11 +6,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.syt.yygh.cmn.listener.DictListener;
 import com.syt.yygh.cmn.mapper.DictMapper;
 import com.syt.yygh.cmn.service.DictService;
-import io.swagger.models.auth.In;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import syt.hospital.model.cmn.Dict;
@@ -19,7 +19,6 @@ import syt.hospital.vo.cmn.DictEeVo;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -77,6 +76,34 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         }
     }
 
+    @Override
+    public String getDictName(String dictCode, String value) {
+        //如果dictCode为空，直接根据value查询
+        if(StringUtils.isEmpty(dictCode)) {
+            //直接根据value查询
+            QueryWrapper<Dict> wrapper = new QueryWrapper<>();
+            wrapper.eq("value",value);
+            Dict dict = baseMapper.selectOne(wrapper);
+            return dict.getName();
+        } else {//如果dictCode不为空，根据dictCode和value查询
+            //根据dictcode查询dict对象，得到dict的id值
+            Dict codeDict = this.getDictByDictCode(dictCode);
+            Long parent_id = codeDict.getId();
+            //根据parent_id和value进行查询
+            Dict finalDict = baseMapper.selectOne(new QueryWrapper<Dict>()
+                    .eq("parent_id", parent_id)
+                    .eq("value", value));
+            return finalDict.getName();
+        }
+    }
+
+    @Override
+    public List<Dict> findByDictCode(String dictCode) {
+        Dict dict = this.getDictByDictCode(dictCode);
+        List<Dict> childData = this.findChildData(dict.getId());
+        return childData;
+    }
+
     private boolean isChildren(Long id) {
         QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("parent_id",id);
@@ -84,5 +111,11 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         return integer>0;
     }
 
+    private Dict getDictByDictCode(String dictCode) {
+        QueryWrapper<Dict> wrapper = new QueryWrapper<>();
+        wrapper.eq("dict_code",dictCode);
+        Dict codeDict = baseMapper.selectOne(wrapper);
+        return codeDict;
+    }
 
 }

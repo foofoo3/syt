@@ -42,4 +42,23 @@ public class DictController {
         return Result.ok();
     }
 
+    @GetMapping("getName/{dictCode}/{value}")
+    public String getName(@PathVariable("dictCode") String dictCode,
+                          @PathVariable("value") String value) {
+        String dictName = dictService.getDictName(dictCode,value);
+        return dictName;
+    }
+
+    @GetMapping("getName/{value}")
+    public String getName(@PathVariable("value") String value) {
+        String dictName = dictService.getDictName("",value);
+        return dictName;
+    }
+
+    @ApiOperation(value = "根据dictCode获取下级节点")
+    @GetMapping("findByDictCode/{dictCode}")
+    public Result findByDictCode(@PathVariable String dictCode) {
+        List<Dict> list = dictService.findByDictCode(dictCode);
+        return Result.ok(list);
+    }
 }
