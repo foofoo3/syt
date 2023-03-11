@@ -8,7 +8,7 @@ export default {
             params: searchObj
           })
     },
-    
+
     findByDictCode(dictCode) {
         return request ({
         url: `/admin/cmn/dict/findByDictCode/${dictCode}`,
@@ -23,8 +23,6 @@ export default {
         })
     },
 
-
-    
     updateStatus(id,status) {
         return request ({
         url: `/admin/hosp/hospital/updateHospStatus//${id}/${status}`,

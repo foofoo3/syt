@@ -8,6 +8,7 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 import '@/styles/index.scss' // global css
+import '@/styles/show.css' // global css
 
 import App from './App'
 import store from './store'
