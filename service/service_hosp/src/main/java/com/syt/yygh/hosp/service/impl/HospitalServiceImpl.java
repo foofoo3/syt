@@ -105,6 +105,12 @@ public class HospitalServiceImpl implements HospitalService {
 
     }
 
+    @Override
+    public String getHospName(String hoscode) {
+        Hospital hospitalByHoscode = hospitalRepository.getHospitalByHoscode(hoscode);
+        return hospitalByHoscode != null ? hospitalByHoscode.getHosname() : null ;
+    }
+
     private Hospital setHospitalHosType(Hospital hospital) {
         String hostypeString = dictFeignClient.getName("Hostype", hospital.getHostype());
 
