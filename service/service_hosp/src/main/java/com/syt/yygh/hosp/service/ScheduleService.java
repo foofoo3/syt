@@ -20,5 +20,5 @@ public interface ScheduleService {
 
     Map<String, Object> getRuleSchedule(long page, long limit, String hoscode, String depcode);
 
-//    List<Schedule> getDetailSchedule(String hoscode, String depcode, String workDate);
+    List<Schedule> getDetailSchedule(String hoscode, String depcode, String workDate);
 }

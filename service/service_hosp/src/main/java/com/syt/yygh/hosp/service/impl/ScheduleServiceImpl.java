@@ -145,16 +145,27 @@ public class ScheduleServiceImpl implements ScheduleService {
         return result;
     }
 
-//    @Override//    public List<Schedule> getDetailSchedule(String hoscode, String depcode, String workDate) {
-//        //根据参数查询mongodb
-//        List<Schedule> scheduleList =
-//                scheduleRepository.findScheduleByHoscodeAndDepcodeAndWorkDate(hoscode,depcode,new DateTime(workDate).toDate());
-//        //把得到list集合遍历，向设置其他值：医院名称、科室名称、日期对应星期
-//        scheduleList.stream().forEach(item->{
-//            this.packageSchedule(item);
-//        });
-//        return scheduleList;
-//    }
+    @Override//
+     public List<Schedule> getDetailSchedule(String hoscode, String depcode, String workDate) {
+        //根据参数查询mongodb
+        List<Schedule> scheduleList =
+                scheduleRepository.findScheduleByHoscodeAndDepcodeAndWorkDate(hoscode,depcode,new DateTime(workDate).toDate());
+        //把得到list集合遍历，向设置其他值：医院名称、科室名称、日期对应星期
+        scheduleList.stream().forEach(item->{
+            this.packageSchedule(item);
+        });
+        return scheduleList;
+    }
+
+    private Schedule packageSchedule(Schedule schedule) {
+        //设置医院名称
+        schedule.getParam().put("hosname",hospitalService.getHospName(schedule.getHoscode()));
+        //设置科室名称
+        schedule.getParam().put("depname",departmentService.getDepName(schedule.getHoscode(),schedule.getDepcode()));
+        //设置日期对应星期
+        schedule.getParam().put("dayOfWeek",this.getDayOfWeek(new DateTime(schedule.getWorkDate())));
+        return schedule;
+    }
 
     private String getDayOfWeek(DateTime dateTime) {
         String dayOfWeek = "";

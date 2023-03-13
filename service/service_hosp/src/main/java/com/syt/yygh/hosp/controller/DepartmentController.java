@@ -4,10 +4,7 @@ import com.syt.yygh.common.result.Result;
 import com.syt.yygh.hosp.service.DepartmentService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import syt.hospital.vo.hosp.DepartmentVo;
 
 import java.util.List;
@@ -17,6 +14,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/admin/hosp/department")
+//@CrossOrigin
 public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
