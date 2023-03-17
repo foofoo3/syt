@@ -137,6 +137,7 @@ import Vue from "vue";
 import userInfoApi from "@/api/userInfo";
 import smsApi from "@/api/msm";
 import hospitalApi from "@/api/hosp";
+import weixinApi from "@/api/weixin";
 
 const defaultDialogAtrr = {
   showLoginType: "phone", // 控制手机登录与微信登录切换
@@ -171,13 +172,23 @@ export default {
     this.showInfo();
   },
   mounted() {
-    // 注册全局登录事件对象
-    window.loginEvent = new Vue();
-    // 监听登录事件
+    // 注册全局登录事件对象
+    window.loginEvent = new Vue(); // 监听登录事件
     loginEvent.$on("loginDialogEvent", function() {
       document.getElementById("loginDialog").click();
-    });
-    // 触发事件，显示登录层：loginEvent.$emit('loginDialogEvent')
+    }); // 触发事件，显示登录层：loginEvent.$emit('loginDialogEvent') 
+    //初始化微信js
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src =
+      "https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js";
+    document.body.appendChild(script); 
+
+    // 微信登录回调处理
+    let self = this;
+    window["loginCallback"] = (name, token, openid) => {
+      self.loginCallback(name, token, openid);
+    };
   },
   methods: {
     querySearchAsync(queryString, cb) {
@@ -317,8 +328,31 @@ export default {
       window.location.href = "/hospital/" + item.hoscode;
     },
 
+    loginCallback(name, token, openid) {
+      // 打开手机登录层，绑定手机号，改逻辑与手机登录一致
+      if (openid != "") {
+        this.userInfo.openid = openid;
+        this.showLogin();
+      } else {
+        this.setCookies(name, token);
+      }
+    },
+
     weixinLogin() {
       this.dialogAtrr.showLoginType = "weixin";
+
+      weixinApi.getLoginParam().then(response => {
+        var obj = new WxLogin({
+          self_redirect: true,
+          id: "weixinLogin", // 需要显示的容器id
+          appid: response.data.appid, // 公众号appid wx*******
+          scope: response.data.scope, // 网页默认即可
+          redirect_uri: response.data.redirectUri, // 授权成功后回调的url
+          state: response.data.state, // 可设置为简单的随机数加session用来校验
+          style: "black", // 提供"black"、"white"可选。二维码的样式
+          href: "" // 外部css文件url，需要https
+        });
+      });
     },
 
     phoneLogin() {
