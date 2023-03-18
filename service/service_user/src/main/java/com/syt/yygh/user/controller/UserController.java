@@ -47,7 +47,6 @@ public class UserController {
     }
 
     //认证审批
-    @ResponseBody
     @GetMapping("approval/{userId}/{authStatus}")
     public Result approval(@PathVariable Long userId,@PathVariable Integer authStatus) {
         userInfoService.approval(userId,authStatus);
