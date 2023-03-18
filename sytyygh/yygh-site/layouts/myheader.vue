@@ -24,18 +24,19 @@
       <!-- 右侧 -->
       <div class="right-wrapper">
         <span class="v-link clickable">帮助中心</span>
-        <el-dropdown>
+        <span v-if="name == ''" class="v-link clickable" @click="showLogin()" id="loginDialog">登录/注册</span>
+        <el-dropdown v-if="name != ''" @command="loginMenu">
           <span class="el-dropdown-link">
-            晴天
-            <i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>
+            {{ name }}
+            <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu class="user-name-wrapper" slot="dropdown">
-            <el-dropdown-item>挂号订单</el-dropdown-item>
-            <el-dropdown-item>就诊人管理</el-dropdown-item>
-            <el-dropdown-item divided>退出登录</el-dropdown-item>
+            <el-dropdown-item command="/user">实名认证</el-dropdown-item>
+            <el-dropdown-item command="/order">挂号订单</el-dropdown-item>
+            <el-dropdown-item command="/patient">就诊人管理</el-dropdown-item>
+            <el-dropdown-item command="/logout" divided>退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <span class="v-link clickable" @click="dialogUserFormVisible = true">登录/注册</span>
       </div>
     </div>
     <!-- 登录弹出层 -->
@@ -176,13 +177,13 @@ export default {
     window.loginEvent = new Vue(); // 监听登录事件
     loginEvent.$on("loginDialogEvent", function() {
       document.getElementById("loginDialog").click();
-    }); // 触发事件，显示登录层：loginEvent.$emit('loginDialogEvent') 
+    }); // 触发事件，显示登录层：loginEvent.$emit('loginDialogEvent')
     //初始化微信js
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.src =
       "https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js";
-    document.body.appendChild(script); 
+    document.body.appendChild(script);
 
     // 微信登录回调处理
     let self = this;
