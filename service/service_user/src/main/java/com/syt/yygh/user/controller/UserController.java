@@ -5,10 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.syt.yygh.common.result.Result;
 import com.syt.yygh.user.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import syt.hospital.model.user.UserInfo;
 import syt.hospital.vo.user.UserInfoQueryVo;
 
@@ -50,6 +47,7 @@ public class UserController {
     }
 
     //认证审批
+    @ResponseBody
     @GetMapping("approval/{userId}/{authStatus}")
     public Result approval(@PathVariable Long userId,@PathVariable Integer authStatus) {
         userInfoService.approval(userId,authStatus);
