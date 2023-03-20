@@ -3,6 +3,7 @@ package com.syt.yygh.hosp.service;
 import org.springframework.data.domain.Page;
 import syt.hospital.model.hosp.Department;
 import syt.hospital.model.hosp.Schedule;
+import syt.hospital.vo.hosp.ScheduleOrderVo;
 import syt.hospital.vo.hosp.ScheduleQueryVo;
 
 import java.util.List;
@@ -25,4 +26,10 @@ public interface ScheduleService {
     Map<String, Object> getBookingScheduleRule(int page, int limit, String hoscode, String depcode);
 
     Schedule getById(String id);
+
+    ScheduleOrderVo getScheduleOrderVo(String scheduleId);
+
+    void update(Schedule schedule);
+
+    Schedule getScheduleId(String scheduleId);
 }
