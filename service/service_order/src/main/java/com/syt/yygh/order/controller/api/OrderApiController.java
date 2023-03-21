@@ -49,12 +49,16 @@ public class OrderApiController {
         return Result.ok(pageModel);
     }
 
-
     @ApiOperation(value = "获取订单状态")
     @GetMapping("auth/getStatusList")
     public Result getStatusList() {
         return Result.ok(OrderStatusEnum.getStatusList());
     }
 
+    @GetMapping("auth/cancelOrder/{orderId}")
+    public Result cancelOrder(@PathVariable Long orderId) {
+        Boolean isOrder = orderService.cancelOrder(orderId);
+        return Result.ok(isOrder);
+    }
 
 }
