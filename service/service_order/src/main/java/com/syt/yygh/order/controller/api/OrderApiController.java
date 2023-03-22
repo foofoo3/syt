@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import syt.hospital.enums.OrderStatusEnum;
 import syt.hospital.model.order.OrderInfo;
+import syt.hospital.vo.order.OrderCountQueryVo;
 import syt.hospital.vo.order.OrderQueryVo;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @Author: foofoo3
@@ -59,6 +61,12 @@ public class OrderApiController {
     public Result cancelOrder(@PathVariable Long orderId) {
         Boolean isOrder = orderService.cancelOrder(orderId);
         return Result.ok(isOrder);
+    }
+
+    @ApiOperation(value = "获取订单统计数据")
+    @PostMapping("inner/getCountMap")
+    public Map<String, Object> getCountMap(@RequestBody OrderCountQueryVo orderCountQueryVo) {
+        return orderService.getCountMap(orderCountQueryVo);
     }
 
 }

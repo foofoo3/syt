@@ -25,13 +25,13 @@ import syt.hospital.model.order.OrderInfo;
 import syt.hospital.model.user.Patient;
 import syt.hospital.vo.hosp.ScheduleOrderVo;
 import syt.hospital.vo.msm.MsmVo;
-import syt.hospital.vo.order.OrderMqVo;
-import syt.hospital.vo.order.OrderQueryVo;
-import syt.hospital.vo.order.SignInfoVo;
+import syt.hospital.vo.order.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * @Author: foofoo3
@@ -271,6 +271,44 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderInfo> implem
             }
         }
         return true;
+    }
+
+    @Override
+    public void patientTips() {
+        QueryWrapper<OrderInfo> wrapper = new QueryWrapper<>();
+        wrapper.eq("reserve_date",new DateTime().toString("yyyy-MM-dd"));
+        wrapper.ne("order_status",OrderStatusEnum.CANCLE.getStatus());
+        List<OrderInfo> orderInfoList = baseMapper.selectList(wrapper);
+        for(OrderInfo orderInfo:orderInfoList) {
+            //短信提示
+            MsmVo msmVo = new MsmVo();
+            msmVo.setPhone(orderInfo.getPatientPhone());
+            String reserveDate = new DateTime(orderInfo.getReserveDate()).toString("yyyy-MM-dd") + (orderInfo.getReserveTime()==0 ? "上午": "下午");
+            Map<String,Object> param = new HashMap<String,Object>(){{
+                put("title", orderInfo.getHosname()+"|"+orderInfo.getDepname()+"|"+orderInfo.getTitle());
+                put("reserveDate", reserveDate);
+                put("name", orderInfo.getPatientName());
+            }};
+            msmVo.setParam(param);
+            rabbitService.sendMessage(MqConst.EXCHANGE_DIRECT_MSM, MqConst.ROUTING_MSM_ITEM, msmVo);
+        }
+    }
+
+    @Override
+    public Map<String, Object> getCountMap(OrderCountQueryVo orderCountQueryVo) {
+        //调用mapper方法得到数据
+        List<OrderCountVo> orderCountVoList = baseMapper.selectOrderCount(orderCountQueryVo);
+
+        //获取x需要数据 ，日期数据  list集合
+        List<String> dateList = orderCountVoList.stream().map(OrderCountVo::getReserveDate).collect(Collectors.toList());
+
+        //获取y需要数据，具体数量  list集合
+        List<Integer> countList =orderCountVoList.stream().map(OrderCountVo::getCount).collect(Collectors.toList());
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("dateList",dateList);
+        map.put("countList",countList);
+        return map;
     }
 
     private OrderInfo packOrderInfo(OrderInfo orderInfo) {
